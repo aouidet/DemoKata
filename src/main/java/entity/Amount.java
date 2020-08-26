@@ -50,11 +50,19 @@ public class Amount {
 
     /**
      * added new amount to account
-     * @param other
-     * @return
+     * @param other : amount to added to the current value
+     * @return Amount
      */
     public Amount addAmountValue(Amount other) {
         return getAmount(this.value + other.value);
+    }
+
+    /**
+     * Get negative amount
+     * @return Amount
+     */
+    public Amount negativeValue(){
+        return getAmount(- value);
     }
 
 }

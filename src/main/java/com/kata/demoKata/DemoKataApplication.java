@@ -14,6 +14,7 @@ public class DemoKataApplication {
 		account.depositAmountFromAccount(Amount.getAmount(1000), DateFormatter.date("24/08/2020"));
 		account.depositAmountFromAccount(Amount.getAmount(1000), DateFormatter.date("25/08/2020"));
 
+		account.withdrawalAmountFromAccount(Amount.getAmount(2000), DateFormatter.date("26/08/2020"));
 
 	}
 }

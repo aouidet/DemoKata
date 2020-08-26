@@ -29,4 +29,13 @@ public class Account {
         currentBalance = AmountAfterTransaction;
         statement.addOperation(transaction, currentBalance);
     }
+
+    /**
+     * the withdrawal amount from account
+     * @param amount
+     * @param date
+     */
+    public void withdrawalAmountFromAccount(Amount amount, Date date){
+        updateAccount(amount.negativeValue(), date);
+    }
 }

@@ -32,4 +32,10 @@ public class AmountTest {
         Amount addedAmount = Amount.getAmount(40);
         assertEquals(new Amount(100), currentAmount.addAmountValue(addedAmount));
     }
+
+    @Test
+    public void negativeValue_ShouldGetAmount_WhenWeHaveNegativeValue(){
+        Amount amount = new Amount(100);
+        assertEquals(amount.negativeValue().getValue(), -100);
+    }
 }

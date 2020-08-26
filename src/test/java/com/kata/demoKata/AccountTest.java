@@ -41,4 +41,16 @@ public class AccountTest {
         verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(1000));
     }
 
+    @Test
+    public void withdrawalAmountFromAccount_ShouldWithdrawalAmount(){
+
+        Amount amountWathdrawal = Amount.getAmount(50);
+        Date dateDeposit = DateFormatter.date("25/08/2020");
+        account.withdrawalAmountFromAccount(amountWathdrawal, dateDeposit);
+
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(-10), dateDeposit);
+        statement.addOperation(matcherTransaction, Amount.getAmount(-10));
+        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(-10));
+    }
+
 }
