@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.PrintStream;
 import java.util.Date;
 
 /**
@@ -38,4 +39,13 @@ public class Account {
     public void withdrawalAmountFromAccount(Amount amount, Date date){
         updateAccount(amount.negativeValue(), date);
     }
+
+    /**
+     * Display History transaction for account
+     * @param printStream
+     */
+    public void displayStatement(PrintStream printStream){
+        statement.print(printStream);
+    }
+
 }

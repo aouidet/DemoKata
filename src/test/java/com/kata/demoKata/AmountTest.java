@@ -38,4 +38,17 @@ public class AmountTest {
         Amount amount = new Amount(100);
         assertEquals(amount.negativeValue().getValue(), -100);
     }
+
+    @Test
+    public void absolutAmount_ShouldGetAbsolutAmountValue(){
+
+        Amount amount = new Amount(-100);
+        assertEquals(amount.absolutAmount().getValue(), 100);
+    }
+
+    @Test
+    public void FormatDisplayedAmount_ShouldGetRepresentativeDicimalFormat(){
+        Amount amount = new Amount(100);
+        assertEquals(amount.formatDisplayedAmount(), "100,00");
+    }
 }

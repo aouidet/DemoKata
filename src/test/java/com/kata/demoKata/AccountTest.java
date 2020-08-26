@@ -53,4 +53,12 @@ public class AccountTest {
         verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(-10));
     }
 
+    @Test
+    public void displayStatement_ShouldDisplayStatement(){
+
+        PrintStream printStream = System.out;
+        account.displayStatement(printStream);
+        verify(statement).print(printStream);
+    }
+
 }

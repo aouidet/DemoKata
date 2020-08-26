@@ -1,5 +1,6 @@
 package entity;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -65,4 +66,27 @@ public class Amount {
         return getAmount(- value);
     }
 
+    // pattern (#): if we have 0 or nothing result value, then put nothing before .
+    private DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+    /**
+     * Get the absolut amount value for display it
+     * @return
+     */
+    public Amount absolutAmount(){
+        return Amount.getAmount(Math.abs(value));
+    }
+
+    public String formatDisplayedAmount(){
+        return decimalFormat.format(value);
+    }
+
+    /**
+     * check if the value of amount is greater than the  older
+     * @param amount
+     * @return
+     */
+    public boolean checkAmount(Amount amount) {
+        return this.value > amount.value ;
+    }
 }
