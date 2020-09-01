@@ -30,5 +30,4 @@ public class Statement {
     private void printOperation(PrintStream printStream){
         operationList.stream().forEach(e->e.displayOperations(printStream));
     }
-
 }

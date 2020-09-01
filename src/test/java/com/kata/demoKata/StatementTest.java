@@ -42,14 +42,4 @@ public class StatementTest {
         statement.print(printStream);
         verify(printStream).println("24/08/2020 | 100,00   |          | 100,00");
     }
-
-    @Test
-    public void print_ShouldDisplayWithdrawalTransaction() {
-
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(100).negate()), DateFormatter.date("25/08/2020"));
-
-        statement.addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(100).negate()));
-        statement.print(printStream);
-        verify(printStream).println("25/08/2020 |          | 100,00   | -100,00");
-    }
 }

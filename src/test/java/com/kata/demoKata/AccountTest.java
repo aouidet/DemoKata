@@ -5,6 +5,7 @@ import entity.Account;
 import entity.Amount;
 import entity.Statement;
 import entity.Transaction;
+import exception.WithdrawalException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import static org.mockito.Mockito.*;
 
 
@@ -23,6 +25,8 @@ public class AccountTest {
     private Statement statement;
 
     private Account account;
+
+    private Amount amount;
 
     @Before
     public void init() {
@@ -43,19 +47,38 @@ public class AccountTest {
     }
 
     @Test
-    public void withdrawalAmountFromAccount_ShouldWithdrawalAmount(){
+    public void withdrawalAmountFromAccount_ShouldThrowException_WhenWeDontHaveEnoughAmount() {
 
         Amount amountWathdrawal = Amount.getAmount(new BigDecimal(50));
         Date dateDeposit = DateFormatter.date("25/08/2020");
-        account.withdrawalAmountFromAccount(amountWathdrawal, dateDeposit);
-
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(10).negate()), dateDeposit);
-        statement.addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(10).negate()));
-        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(10).negate()));
+        Amount.setAmount(new BigDecimal(100));
+        try {
+            account.withdrawalAmountFromAccount(amountWathdrawal, dateDeposit);
+        }catch (WithdrawalException e){
+            assert (e.getMessage().contains("We don't have enough amount in your account"));
+        }
     }
 
     @Test
-    public void displayStatement_ShouldDisplayStatement(){
+    public void withdrawalAmountFromAccount_ShouldThrowException_WhenWeHaveEnoughAmountInAccount() {
+
+        account.depositAmountFromAccount(Amount.getAmount(new BigDecimal(100)),DateFormatter.date("25/08/2020"));
+
+        Amount amountWathdrawal = Amount.getAmount(new BigDecimal(50));
+        Date dateDeposit = DateFormatter.date("25/08/2020");
+
+        try {
+            account.withdrawalAmountFromAccount(amountWathdrawal, dateDeposit);
+        }catch (WithdrawalException e){
+            assert (e.getMessage().contains("your balance is insufficient"));
+        }
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(50).negate()), dateDeposit);
+        statement.addOperation(matcherTransaction, amountWathdrawal);
+        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(50)));
+    }
+
+    @Test
+    public void displayStatement_ShouldDisplayStatement() {
 
         PrintStream printStream = System.out;
         account.displayStatement(printStream);

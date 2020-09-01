@@ -1,5 +1,7 @@
 package entity;
 
+import exception.WithdrawalException;
+
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,22 +12,27 @@ import java.util.Date;
 public class Account {
 
     private Statement statement;
-    private Amount currentBalance = Amount.getAmount(new BigDecimal(0));
+    public Amount currentBalance = Amount.getAmount(new BigDecimal(0));
 
-    public Account(Statement statement){
+    public Account(Statement statement) {
         this.statement = statement;
+    }
+
+    public void setCurrentBalance(Amount currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     /**
      * the deposit amount to account
+     *
      * @param amount
      * @param date
      */
-    public void depositAmountFromAccount(Amount amount, Date date){
+    public void depositAmountFromAccount(Amount amount, Date date) {
         updateAccount(amount, date);
     }
 
-    private void updateAccount(Amount value, Date dateTransaction){
+    private void updateAccount(Amount value, Date dateTransaction) {
         Transaction transaction = new Transaction(value, dateTransaction);
         Amount AmountAfterTransaction = transaction.getCurrentBalance(currentBalance);
         currentBalance = AmountAfterTransaction;
@@ -34,18 +41,25 @@ public class Account {
 
     /**
      * the withdrawal amount from account
+     *
      * @param amount
      * @param date
      */
-    public void withdrawalAmountFromAccount(Amount amount, Date date){
-        updateAccount(amount.negativeValue(), date);
+    public void withdrawalAmountFromAccount(Amount amount, Date date) throws WithdrawalException {
+
+        if (currentBalance.getValue().compareTo(amount.getValue()) < 0) {
+            throw new WithdrawalException("We don't have enough amount in your account");
+        } else {
+            updateAccount(amount.negativeValue(), date);
+        }
     }
 
     /**
      * Display History transaction for account
+     *
      * @param printStream
      */
-    public void displayStatement(PrintStream printStream){
+    public void displayStatement(PrintStream printStream) {
         statement.print(printStream);
     }
 

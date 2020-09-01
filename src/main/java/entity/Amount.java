@@ -50,6 +50,10 @@ public class Amount {
         return new Amount(val);
     }
 
+    public static Amount setAmount(BigDecimal val){
+        return new Amount(val);
+    }
+
     /**
      * added new amount to account
      * @param other : amount to added to the current value
