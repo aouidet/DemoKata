@@ -3,6 +3,7 @@ package entity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,7 +32,7 @@ public class Transaction {
     public void print(PrintStream printStream, Amount balance){
         StringBuilder builder = new StringBuilder();
         addDateToBuilder(builder);
-        if(amount.checkAmount(Amount.getAmount(0))){
+        if(amount.checkAmount(Amount.getAmount(new BigDecimal(0)))){
             addCreditToBuilder(builder);
         }else{
             addDebitToBuilder(builder);

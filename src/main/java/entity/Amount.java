@@ -1,5 +1,6 @@
 package entity;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
@@ -8,29 +9,29 @@ import java.util.Objects;
  */
 public class Amount {
 
-    private int value;
+    private BigDecimal value;
 
     /**
      * amount construct
      *
      * @param value
      */
-    public Amount(int value) {
+    public Amount(BigDecimal value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
     @Override
     public boolean equals(Object o) {
         Amount amountTmp = (Amount) o;
-        if (value == amountTmp.value)
+        if (value.compareTo(amountTmp.value) == 0)
             return true;
         return false;
     }
@@ -45,7 +46,7 @@ public class Amount {
      * @param val : amount
      * @return current Amount
      */
-    public static Amount getAmount(int val){
+    public static Amount getAmount(BigDecimal val){
         return new Amount(val);
     }
 
@@ -55,7 +56,7 @@ public class Amount {
      * @return Amount
      */
     public Amount addAmountValue(Amount other) {
-        return getAmount(this.value + other.value);
+        return getAmount(this.value.add(other.value));
     }
 
     /**
@@ -63,7 +64,7 @@ public class Amount {
      * @return Amount
      */
     public Amount negativeValue(){
-        return getAmount(- value);
+        return getAmount(value.negate());
     }
 
     // pattern (#): if we have 0 or nothing result value, then put nothing before .
@@ -74,7 +75,7 @@ public class Amount {
      * @return
      */
     public Amount absolutAmount(){
-        return Amount.getAmount(Math.abs(value));
+        return Amount.getAmount(value.abs());
     }
 
     public String formatDisplayedAmount(){
@@ -87,6 +88,6 @@ public class Amount {
      * @return
      */
     public boolean checkAmount(Amount amount) {
-        return this.value > amount.value ;
+        return this.value.compareTo(amount.value) > 0 ;
     }
 }

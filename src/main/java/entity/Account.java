@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
 public class Account {
 
     private Statement statement;
-    private Amount currentBalance = Amount.getAmount(0);
+    private Amount currentBalance = Amount.getAmount(new BigDecimal(0));
 
     public Account(Statement statement){
         this.statement = statement;

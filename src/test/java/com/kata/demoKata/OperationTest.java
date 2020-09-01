@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.verify;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OperationTest {
@@ -19,8 +20,8 @@ public class OperationTest {
 
     @Test
     public void displayOperations_shouldDisplayOperation_WhenDepositAmount(){
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(1000), DateFormatter.date("24/08/2020"));
-        Operation operation = new Operation(matcherTransaction, Amount.getAmount(1000));
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(1000)), DateFormatter.date("24/08/2020"));
+        Operation operation = new Operation(matcherTransaction, Amount.getAmount(new BigDecimal(1000)));
         operation.displayOperations(printStream);
         verify(printStream).println("24/08/2020 | 1000,00  |          | 1000,00");
 
@@ -28,8 +29,8 @@ public class OperationTest {
 
     @Test
     public void displayOperations_shouldDisplayOperation_WhenCreditAmount(){
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(-1000), DateFormatter.date("24/08/2020"));
-        Operation operation = new Operation(matcherTransaction, Amount.getAmount(-1000));
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(1000).negate()), DateFormatter.date("24/08/2020"));
+        Operation operation = new Operation(matcherTransaction, Amount.getAmount(new BigDecimal(1000).negate()));
         operation.displayOperations(printStream);
         verify(printStream).println("24/08/2020 |          | 1000,00  | -1000,00");
 

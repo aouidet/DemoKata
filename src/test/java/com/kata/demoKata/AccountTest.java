@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import static org.mockito.Mockito.*;
 
@@ -32,25 +33,25 @@ public class AccountTest {
     @Test
     public void depositAmountFromAccount_ShouldAddDepositAmount() {
 
-        Amount amountDeposit = Amount.getAmount(1000);
+        Amount amountDeposit = Amount.getAmount(new BigDecimal(1000));
         Date dateDeposit = DateFormatter.date("24/08/2020");
 
         account.depositAmountFromAccount(amountDeposit, dateDeposit);
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(1000), dateDeposit);
-        statement.addOperation(matcherTransaction, Amount.getAmount(1000));
-        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(1000));
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(1000)), dateDeposit);
+        statement.addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(1000)));
+        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(1000)));
     }
 
     @Test
     public void withdrawalAmountFromAccount_ShouldWithdrawalAmount(){
 
-        Amount amountWathdrawal = Amount.getAmount(50);
+        Amount amountWathdrawal = Amount.getAmount(new BigDecimal(50));
         Date dateDeposit = DateFormatter.date("25/08/2020");
         account.withdrawalAmountFromAccount(amountWathdrawal, dateDeposit);
 
-        Transaction matcherTransaction = new Transaction(Amount.getAmount(-10), dateDeposit);
-        statement.addOperation(matcherTransaction, Amount.getAmount(-10));
-        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(-10));
+        Transaction matcherTransaction = new Transaction(Amount.getAmount(new BigDecimal(10).negate()), dateDeposit);
+        statement.addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(10).negate()));
+        verify(statement, times(1)).addOperation(matcherTransaction, Amount.getAmount(new BigDecimal(10).negate()));
     }
 
     @Test
